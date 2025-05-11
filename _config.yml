@@ -1,3 +1,7 @@
-title: My Personal Website
-description: Resume and profile of [Your Name]
-theme: jekyll-theme-cayman
+remote_theme: "mmistakes/minimal-mistakes"
+title: "Poornima S Jain"
+description: "PHD Scholar | Artificial Intelligence | IIT Hyderabad"
+plugins:
+  - jekyll-include-cache
+
+# Optional: social links, analytics, etc.
