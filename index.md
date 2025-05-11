@@ -1,6 +1,9 @@
 ---
-title: My CV
+layout: home
+author_profile: true
+title: "Poornima S Jain – PhD Scholar and researcher"
 ---
+
 
 # 👋 Hello, I'm Poornima S Jain
 
