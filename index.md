@@ -1,8 +1,3 @@
----
-layout: home
-author_profile: true
----
-
 <img src="MS2019009_PoornimaJain.jpg" alt="My Photo" width="200" align="left" style="margin-right: 20px; border-radius: 50%;" />
 
 # 👋 About me
@@ -51,7 +46,7 @@ I worked with Dr. Neelam Sinha and Dr. G. Srinivasaraghavan on an exciting probl
 Won first place for presenting my M.S. thesis work at the Student Research Symposium at the 8th National Conference on Computer Vision, Pattern Recognition, Image Processing and Graphics (NCVPRIPG) held at IIT Jodhpur, India from 21-23 July 2023
 
 ## 🛠️ HOBBIES
-I love cooking, practicing yoga and creative arts
+I love cooking, practicing yoga and creative arts!
 
 ## 📫 CONTACT
 
