@@ -20,7 +20,7 @@ I worked with Dr. Neelam Sinha and Dr. G. Srinivasaraghavan on an exciting probl
 ## 🎓 EDUCATION
 
 ***(Current) PhD in Artificial Intelligence, IIT Hyderabad	(July 2024 – present)***
-- CGPA: 9/10
+- CGPA: 9.5/10
 - Coursework: Foundations of Machine Learning, Advanced Data Structures and Algorithms, Deep Learning, Deep Generative Models, Computer Vision, Fraud Analytics using Predictive and Social Network Techniques
 
 ***MS-by-Research in Computer Science, IIIT Bangalore	(August 2019 – December 2022)*** 
@@ -43,12 +43,12 @@ I worked with Dr. Neelam Sinha and Dr. G. Srinivasaraghavan on an exciting probl
 -	4th merit position in Nagpur division
 
 ## ACHIEVEMENTS
-Won first place for presenting my M.S. thesis work at the Student Research Symposium at the 8th National Conference on Computer Vision, Pattern Recognition, Image Processing and Graphics (NCVPRIPG) held at IIT Jodhpur, India from 21-23 July 2023
+Won first place for presenting my M.S. thesis work in the Student Research Symposium at the 8th National Conference on Computer Vision, Pattern Recognition, Image Processing and Graphics (NCVPRIPG) held at IIT Jodhpur, India from 21-23 July 2023
 
 ## 🛠️ HOBBIES
 I love cooking, practicing yoga and creative arts!
 
-## 📫 CONTACT
+## 📫 CONNECT
 
 - GitHub: [jainspoornima]([https://github.com/yourusernam](https://github.com/jainspoornima/jainspoornima.github.io)e)  
 - LinkedIn: [poornima-jain-79340222](https://www.linkedin.com/in/poornima-jain-793402227/)
