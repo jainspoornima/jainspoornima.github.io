@@ -4,6 +4,7 @@ author_profile: true
 title: "Poornima S Jain – PhD Scholar and researcher"
 ---
 
+<img src="MS2019009_PoornimaJain.jpg" alt="My Photo" width="200" align="left" style="margin-right: 20px; border-radius: 50%;" />
 
 # 👋 Hello, I'm Poornima S Jain
 
