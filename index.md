@@ -1,6 +1,6 @@
 <img src="MS2019009_PoornimaJain.jpg" alt="My Photo" width="200" align="left" style="margin-right: 20px; border-radius: 50%;" />
 
-# 👋 About me
+## 👋 ABOUT ME
 
 I am Poornima Jain, PhD student the Department of Artificial Intelligence at IIT-Hyderabad, supervised by Dr. Vineeth Balasubramanian. I have a keen interest in the low-level working of neural networks with a focus on applications for computer vision.
 
