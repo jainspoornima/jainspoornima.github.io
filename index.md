@@ -1,22 +1,19 @@
 ---
 layout: home
 author_profile: true
-title: "Poornima S Jain – PhD Scholar and researcher"
 ---
 
 <img src="MS2019009_PoornimaJain.jpg" alt="My Photo" width="200" align="left" style="margin-right: 20px; border-radius: 50%;" />
 
-# 👋 Hello, I'm Poornima S Jain
+# 👋 About me
 
-Welcome to my personal site. Here's a quick overview of my professional background:
+I am Poornima Jain, PhD student the Department of Artificial Intelligence, IIT-Hyderabad supervised by Dr. Vineeth Balasubramanian. I have a keen interest in the low-level working of neural networks with a focus on applications for computer vision.
 
 ## 💼 EXPERIENCE
   
 **PHD Student, Dept. of Artificial Intelligence, IIT-Hyderabad**
 
-PHD THESIS : Erasing the Past: “Machine Unlearning” in Contemporary Neural Network Models
-
- Machine Unlearning (MU) is an upcoming research field focused on efficiently erasing the influence of certain training data on a model while maintaining its utility. This is especially relevant in the light of recent legislations such as the European Union’s GDPR (2018) that allow users rights to remove their data from AI models. Most existing MU research is focused on unlearning in vanilla classification tasks with stationary data domains. Unlearning in non-stationary data settings and multimodal vision-language models, including settings such as domain adaptation (where models adapt to new data domains) and continual learning (where models continually learn new tasks) remains largely unexplored. As a first step, we recently proposed an adversarial optimization method to unlearn source-exclusive classes in a source-free domain adaptation setting. Our method outperforms existing baselines on well-known benchmark datasets . Our ongoing efforts include a comprehensive literature survey of MU methods across settings, developing novel unlearning algorithms for continual learning, foundational models and developing robust and comprehensive evaluation metrics to measure the effectiveness of unlearning.
+I am working on developing novel unlearning algorithms for continual learning settings, foundational models and developing robust evaluation metrics for unlearning.
 
 **MS-by-Research in Computer Science, IIIT-Bangalore	Aug 2019 – Dec 2022**  
 
