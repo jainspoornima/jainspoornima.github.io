@@ -1,10 +1,10 @@
 ---
 layout: home
-title: "Poornima S Jain"
+title: ""
 author_profile: true
 header:
-  overlay_color: "#80cbc4"
-  overlay_filter: "0.3"
+  overlay_color: "#26c6da"
+  overlay_filter: "0.2"
   show_overlay_excerpt: false
 ---
 
