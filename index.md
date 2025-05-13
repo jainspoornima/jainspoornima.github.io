@@ -1,8 +1,15 @@
 ---
 layout: home
-title: "Home"
+title: "Poornima S Jain"
 author_profile: true
+header:
+  overlay_color: "#009688"
+  overlay_filter: "0.3"
+  show_overlay_excerpt: false
+  caption: "PhD Scholar | Artificial Intelligence | IIT Hyderabad"
 ---
+
+
 
 <img src="MS2019009_PoornimaJain.jpg" alt="My Photo" width="200" align="left" style="margin-right: 20px; border-radius: 50%;" />
 
