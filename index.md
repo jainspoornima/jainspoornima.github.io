@@ -50,7 +50,7 @@ I love cooking, practicing yoga and creative arts!
 
 ## 📫 CONNECT
 
-- GitHub: [jainspoornima]([https://github.com/yourusernam](https://github.com/jainspoornima/jainspoornima.github.io)e)  
+- GitHub: [jainspoornima](https://github.com/jainspoornima/jainspoornima.github.io)
 - LinkedIn: [poornima-jain-79340222](https://www.linkedin.com/in/poornima-jain-793402227/)
 
 
