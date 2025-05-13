@@ -1,4 +1,4 @@
-remote_theme: "mmistakes/minimal-mistakes"
+theme: minima
 # title: "Poornima S Jain"
 description: "PHD Scholar | Artificial Intelligence | IIT Hyderabad"
 plugins:
