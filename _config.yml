@@ -5,4 +5,6 @@ description: "PHD Scholar | Artificial Intelligence | IIT Hyderabad"
 plugins:
   - jekyll-include-cache
 
+author: poornima
+
 # Optional: social links, analytics, etc.
