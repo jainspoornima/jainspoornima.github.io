@@ -1,0 +1,5 @@
+poornima:
+  name: "Poornima S Jain"
+  avatar: "/assets/images/profile.jpg"  # optional, make sure the image exists
+  bio: "PhD Scholar in AI at IIT Hyderabad"
+  location: "India"
