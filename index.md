@@ -1,3 +1,9 @@
+---
+layout: home
+title: "Home"
+author_profile: true
+---
+
 <img src="MS2019009_PoornimaJain.jpg" alt="My Photo" width="200" align="left" style="margin-right: 20px; border-radius: 50%;" />
 
 ## 👋 ABOUT ME
