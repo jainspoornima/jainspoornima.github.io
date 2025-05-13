@@ -1,0 +1,13 @@
+.author__avatar img {
+  filter: none !important;
+  transition: none !important;
+}
+
+.sidebar .author__avatar {
+  opacity: 1 !important;
+}
+
+.author__avatar img {
+  width: 120px !important;   /* default is 90px */
+  height: 120px !important;
+}
