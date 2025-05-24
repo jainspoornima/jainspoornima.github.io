@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+{% include masthead.html %}
+{% include header.html type="page" %}
+
+<div id="main" role="main">
+  <div class="sidebar sticky">
+    {% include sidebar.html %}
+  </div>
+
+  <div class="archive">
+    {{ content }}
+  </div>
+</div>
+
+{% include footer.html %}
