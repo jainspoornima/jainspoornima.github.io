@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: home_no_posts
 title: "Poornima S Jain"
 author_profile: true
 header:
