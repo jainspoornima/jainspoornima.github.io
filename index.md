@@ -8,7 +8,6 @@ header:
   show_overlay_excerpt: false
   overlay_image: ""
 classes: wide
-excerpt: ""        # ← prevents extra text under header
 paginate: false    # ← disables post listing
 ---
 
