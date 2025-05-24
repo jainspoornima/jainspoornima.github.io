@@ -7,8 +7,8 @@ header:
   overlay_filter: "0.3"
   show_overlay_excerpt: false
   overlay_image: ""
+entries: []    # ← disables post listing
 classes: wide
-paginate: false    # ← disables post listing
 ---
 
 Hello! I'm a Ph.D. student in the Department of Artificial Intelligence at IIT Hyderabad, and a member of the Machine Learning and Vision Lab supervised by [Dr. Vineeth Balasubramanian](https://people.iith.ac.in/vineethnb/). My interest lies at the fundamental-level exploration of neural networks with a focus on computer vision applications. Previously, I worked on Complex-valued Neural Networks for MRI Reconstruction as a part of my MS-by-Research at IIIT-Bangalore with [Dr. Neelam Sinha](https://cbr-iisc.ac.in/neelam-sinha/) and [Dr. G. Srinivasaraghavan](https://www.iiitb.ac.in/faculty/g-srinivasaraghavan). 
