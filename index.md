@@ -3,7 +3,7 @@ layout: home
 title: "Poornima S Jain"
 author_profile: true
 header:
-  overlay_color: "#009688"
+  overlay_color: "#48D1CC"
   overlay_filter: "0.3"
   show_overlay_excerpt: false
 classes: wide
