@@ -12,7 +12,7 @@ Hello! I'm a Ph.D. student in the Department of Artificial Intelligence at IIT H
 
 __Research Interests__: Machine Unlearning (MU),  MU in Foundational Models, Continual Unlearning, Reasoning in Neural Networks 
 
-__News__:
+__News__
 - [Dec 2024] : Selected to participate in [IndoML-2024](https://indoml.in/2024/)
 - [Jul 2024] : Excited to join Ph.D.@[Machine Learning and Vision Lab](https://lab1055.github.io/) at IIT-Hyderabad!
 - [Jul 2023] : Won first place at the Student Research Symposium in NCVPRIPG-2023 at IIT-Jodhpur!
@@ -20,10 +20,10 @@ __News__:
 - [Dec 2022] : Full paper: [_Novel Complex AUTOMAP for Accelerated MRI_](https://dl.acm.org/doi/10.1145/3571600.3571636) presented at ICVGIP-2022 at IIT-Gandhinagar
 - [Jul 2022] : Full paper: [_The Complex-valued PD-net for MRI reconstruction of knee images_](https://ieeexplore.ieee.org/document/9872016) presented at EMBC-2022 at Glasgow, UK
 
-__Volunteering__: 
+__Volunteering__ 
 - [Dec 2023] : Volunteer at IEEE International Conference on High Performance Computing, Data, and Analytics 2022 (HiPC-2022) at Bangalore, India
 - Teaching Assistant for SM202-Maths 4-Probability, Statistics and Complex Analysis for 2nd year Integrated Mtech
 
-__Connect__: 
+__Connect__
 - [LinkedIn](www.linkedin.com/in/poornima-jain-793402227)
 - [GitHub](https://github.com/jainspoornima)
