@@ -28,5 +28,5 @@ __Volunteering__
 - Teaching Assistant for SM202-Maths 4-Probability, Statistics and Complex Analysis for 2nd year Integrated Mtech
 
 __Connect__
-- [LinkedIn](www.linkedin.com/in/poornima-jain-793402227)
+- [LinkedIn](https://www.linkedin.com/in/poornima-jain-793402227/)
 - [GitHub](https://github.com/jainspoornima)
