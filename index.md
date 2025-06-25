@@ -27,6 +27,6 @@ __Volunteering__
 - [Dec 2023] : Volunteer at IEEE International Conference on High Performance Computing, Data, and Analytics 2022 (HiPC-2022) at Bangalore, India
 - Teaching Assistant for SM202-Maths 4-Probability, Statistics and Complex Analysis for 2nd year Integrated Mtech
 
-__Connect__
+## Connect
 - [LinkedIn](https://www.linkedin.com/in/poornima-jain-793402227/)
 - [GitHub](https://github.com/jainspoornima)
