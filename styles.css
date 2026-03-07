@@ -51,8 +51,8 @@ body {
 }
 
 .profile-photo {
-  width: 100%;
-  aspect-ratio: 4 / 4.25;
+  width: min(100%, 260px);
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: var(--radius);
   border: 1px solid #cad7eb;
@@ -89,7 +89,7 @@ h1 {
   font-size: 1rem;
   line-height: 1.65;
   margin: 16px 0 0;
-  max-width: 72ch;
+  max-width: 100%;
 }
 
 .social-links {
@@ -266,6 +266,10 @@ h3 {
   .profile-panel {
     position: static;
     max-width: 520px;
+  }
+
+  .profile-photo {
+    width: min(100%, 220px);
   }
 
   .bio {
