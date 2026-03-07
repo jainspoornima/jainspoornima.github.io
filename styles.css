@@ -1,0 +1,243 @@
+﻿:root {
+  --bg: #f3f6fb;
+  --bg-soft: #eaf0f8;
+  --panel: #ffffff;
+  --text: #162238;
+  --muted: #4e607d;
+  --line: #d7e0ee;
+  --accent: #1b56d8;
+  --accent-soft: #e5edff;
+  --success: #0c814d;
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 18% 10%, #e3ecff 0, transparent 30%),
+    radial-gradient(circle at 90% 90%, #d7f0ea 0, transparent 25%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+.page-glow {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(135deg, rgba(24, 79, 207, 0.03) 0%, rgba(12, 129, 77, 0.02) 100%);
+  pointer-events: none;
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 36px auto;
+  padding: 0 20px 40px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+}
+
+.profile-panel {
+  align-self: start;
+  position: sticky;
+  top: 24px;
+}
+
+.profile-photo {
+  width: 100%;
+  aspect-ratio: 4 / 4.25;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid #cad7eb;
+  background: #d8dee8;
+  box-shadow: 0 20px 40px rgba(22, 34, 56, 0.1);
+}
+
+h1 {
+  margin: 20px 0 8px;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 2.3rem;
+  line-height: 1.1;
+}
+
+.role {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.45rem;
+}
+
+.bio {
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  margin-top: 22px;
+  max-width: 30ch;
+}
+
+.social-links {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.social-links a {
+  text-decoration: none;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid #c9dafd;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-2px);
+  background: #d6e4ff;
+}
+
+.content-panel section {
+  margin-bottom: 34px;
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.news-list,
+.experience-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.news-list li,
+.experience-list li {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 12px;
+  align-items: start;
+  font-size: 1.2rem;
+}
+
+.date {
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.publication-card {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(22, 34, 56, 0.06);
+}
+
+.pub-thumb {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #d0d9e7;
+  background: #d8dee8;
+}
+
+h3 {
+  margin: 0;
+  color: var(--accent);
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.authors {
+  margin: 8px 0 10px;
+  color: var(--muted);
+  font-size: 1.25rem;
+}
+
+.venue {
+  margin: 0 0 12px;
+  display: inline-block;
+  color: var(--success);
+  background: #e8f8f0;
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.chips {
+  display: flex;
+  gap: 10px;
+}
+
+.chips a {
+  text-decoration: none;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .profile-panel {
+    position: static;
+    max-width: 520px;
+  }
+
+  .bio {
+    max-width: 48ch;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  h3 {
+    font-size: 1.35rem;
+  }
+
+  .role,
+  .authors,
+  .news-list li,
+  .experience-list li {
+    font-size: 1.05rem;
+  }
+
+  .publication-card {
+    grid-template-columns: 1fr;
+  }
+
+  .pub-thumb {
+    max-width: 360px;
+  }
+}
