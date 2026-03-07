@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #f3f6fb;
   --bg-soft: #eaf0f8;
   --panel: #ffffff;
@@ -62,9 +62,10 @@ body {
 
 h1 {
   margin: 20px 0 8px;
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  font-size: 2.3rem;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 2.2rem;
   line-height: 1.1;
+  letter-spacing: 0.01em;
 }
 
 .role {
@@ -85,23 +86,43 @@ h1 {
   margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
 }
 
-.social-links a {
+.icon-link {
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
   text-decoration: none;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid #c9dafd;
-  border-radius: 999px;
-  padding: 7px 12px;
-  font-weight: 600;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.social-links a:hover {
+.icon-link svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+.icon-link:hover {
   transform: translateY(-2px);
-  background: #d6e4ff;
+  color: var(--accent);
+}
+
+.cv-link {
+  text-decoration: underline;
+  color: var(--text);
+  font-size: 2rem;
+  line-height: 1;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  transition: color 0.2s ease;
+}
+
+.cv-link:hover {
+  color: var(--accent);
 }
 
 .content-panel section {
@@ -112,10 +133,10 @@ h2 {
   margin: 0;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--line);
-  font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  font-size: 2rem;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 1.95rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 .news-list,
@@ -139,7 +160,7 @@ h2 {
 .date {
   font-weight: 700;
   color: var(--accent);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .publication-card {
@@ -164,8 +185,9 @@ h2 {
 h3 {
   margin: 0;
   color: var(--accent);
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   line-height: 1.2;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
 }
 
 .authors {
