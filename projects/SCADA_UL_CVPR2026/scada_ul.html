@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Models Leak What They Shouldn't</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- MathJax for LaTeX Rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fafafa;
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #0c4a6e, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .author-link {
+            transition: color 0.2s ease;
+        }
+        .author-link:hover {
+            color: #0284c7;
+        }
+        .btn-link {
+            transition: all 0.2s ease;
+        }
+        .btn-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .placeholder-img {
+            background-image: repeating-linear-gradient(45deg, #f3f4f6 25%, transparent 25%, transparent 75%, #f3f4f6 75%, #f3f4f6), repeating-linear-gradient(45deg, #f3f4f6 25%, #ffffff 25%, #ffffff 75%, #f3f4f6 75%, #f3f4f6);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased leading-relaxed">
+
+    <!-- Header / Hero Section -->
+    <header class="pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+        <div class="inline-block mb-4 px-3 py-1 rounded-full bg-brand-50 text-brand-600 text-sm font-semibold tracking-wide border border-brand-100">
+            CVPR 2026
+        </div>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 mb-6 font-serif leading-snug mx-auto max-w-4xl flex flex-col items-center justify-center">
+            <span class="flex items-center justify-center gap-2">
+                <!-- Custom \oslash SVG -->
+                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-rose-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="6.5" y1="17.5" x2="17.5" y2="6.5"></line>
+                </svg>
+                Source Models Leak What They Shouldn't
+                <!-- Custom \nrightarrow SVG (strike on shaft) -->
+                <svg class="w-8 h-6 sm:w-12 sm:h-8 text-rose-800 shrink-0" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12h28"></path>
+                    <path d="M22 6l8 6-8 6"></path>
+                    <path d="M14 17l4-10"></path>
+                </svg>
+            </span>
+            <span class="text-gradient font-extrabold mt-3 block text-center">Unlearning Zero-Shot Transfer in Domain Adaptation Through Adversarial Optimization</span>
+        </h1>
+        
+        <!-- Authors -->
+        <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg sm:text-xl font-medium text-gray-700 mb-4">
+            <a href="#" class="author-link">Arnav Devalapally<sup>1,2,*</sup></a>
+            <a href="#" class="author-link">Poornima Jain<sup>1,*</sup></a>
+            <a href="#" class="author-link">Kartik Srinivas<sup>1,3</sup></a>
+            <a href="#" class="author-link">Vineeth N. Balasubramanian<sup>1,4</sup></a>
+        </div>
+
+        <!-- Affiliations -->
+        <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:text-base text-gray-500 mb-8">
+            <span><sup>1</sup> Indian Institute of Technology Hyderabad</span>
+            <span><sup>2</sup> University of Michigan</span>
+            <span><sup>3</sup> Carnegie Mellon University</span>
+            <span><sup>4</sup> Microsoft Research</span>
+        </div>
+        <div class="text-sm text-gray-400 mb-8">
+            * Equal Contribution
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://arxiv.org/abs/2604.08238" target="_blank" class="btn-link flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800">
+                <i class="ph ph-file-text text-xl"></i>
+                ArXiv
+            </a>
+            <a href="./cvpr_2026_paper_poornima_arxiv.pdf" target="_blank" class="btn-link flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800">
+                <i class="ph ph-file-pdf text-xl"></i>
+                Paper PDF
+            </a>
+            <a href="https://github.com/D-Arnav/SCADA" target="_blank" class="btn-link flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800">
+                <i class="ph ph-github-logo text-xl"></i>
+                Code
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        
+        <!-- Teaser Figure -->
+        <section class="mb-16">
+            <!-- REPLACE THE SRC BELOW WITH YOUR ACTUAL TEASER IMAGE (e.g. Figure 1) -->
+            <div class="w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 bg-white placeholder-img flex items-center justify-center relative aspect-[16/9]">
+                <img src="./setting-overview.pdf" alt="Teaser Figure comparing Conventional MU and Proposed SCADA-UL" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('teaser-placeholder').style.display='flex';">
+                <div id="teaser-placeholder" class="absolute inset-0 flex-col items-center justify-center text-gray-400 hidden z-0">
+                    <i class="ph ph-image text-4xl mb-2"></i>
+                    <p class="font-medium">Place teaser image here (teaser.png)</p>
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-gray-600 text-justify">
+                <strong>Figure 1: Comparison of Conventional MU and Proposed SCADA-UL.</strong> Conventional class-wise machine unlearning focuses on forgetting a subset of classes from a trained model. On the other hand, the proposed SCADA-UL aims to remove knowledge of source-exclusive classes (classes absent in target domain) while adapting a model to a new domain. For instance, if a land-use categorization model is adapted to a new geography, sensitive classes such as airports must not be transferred to the target domain.
+            </p>
+        </section>
+
+        <!-- The Practical Need Callout -->
+        <section class="mb-16">
+            <div class="bg-brand-50 border-l-4 border-brand-500 p-6 sm:p-8 rounded-r-2xl shadow-sm text-left flex flex-col lg:flex-row items-center gap-8">
+                <div class="lg:w-1/2">
+                    <h3 class="text-xl font-bold text-brand-900 mb-3 flex items-center gap-2">
+                        <i class="ph-fill ph-shield-warning text-brand-600"></i>
+                        The Privacy Risk in Domain Adaptation
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
+                        When models are adapted to new domains (like satellite imagery or medical scans), they may inadvertently retain and leak sensitive, source-domain specific information—even when those classes are not represented in the new target data. For example, a disease diagnosis model initially trained on a dataset containing both mental and physical health conditions might be deployed in a setting where patient privacy policies prohibit the use of mental health data. Retaining these classes poses severe privacy risks including unintended information leakage or re-identification.
+                    </p>
+                </div>
+                
+                <div class="lg:w-1/2 w-full flex justify-center">
+                    <!-- Infographic Diagram -->
+                    <div class="flex flex-col items-center justify-between bg-white p-4 sm:p-5 pb-12 rounded-xl border border-brand-200 shadow-lg relative w-full max-w-lg overflow-visible">
+                        <!-- Background grid pattern -->
+                        <div class="absolute inset-0 opacity-20 rounded-xl" style="background-image: radial-gradient(#0ea5e9 1.5px, transparent 1.5px); background-size: 12px 12px;"></div>
+                        
+                        <!-- Headers -->
+                        <div class="flex justify-between w-full relative z-10 mb-5 px-1">
+                            <div class="w-[44%] flex flex-col items-center gap-1.5">
+                                <div class="w-14 h-14 bg-white border border-brand-200 rounded-xl shadow-md flex items-center justify-center relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-brand-500/10 mix-blend-overlay"></div>
+                                    <i class="ph-duotone ph-hospital text-4xl text-brand-600 drop-shadow-sm"></i>
+                                </div>
+                                <div class="text-[10px] sm:text-xs font-extrabold text-gray-500 uppercase text-center tracking-widest bg-white/90 rounded px-2 py-0.5 backdrop-blur-sm shadow-sm border border-gray-100">
+                                    Source Hospital
+                                </div>
+                            </div>
+                            <div class="w-[44%] flex flex-col items-center gap-1.5 mt-2">
+                                <div class="w-12 h-12 bg-white border border-gray-200 rounded-xl shadow-md flex items-center justify-center relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gray-500/5 mix-blend-overlay"></div>
+                                    <i class="ph-duotone ph-building text-3xl text-gray-500 drop-shadow-sm"></i>
+                                </div>
+                                <div class="text-[10px] sm:text-xs font-extrabold text-gray-500 uppercase text-center tracking-widest bg-white/90 rounded px-2 py-0.5 backdrop-blur-sm shadow-sm border border-gray-100">
+                                    Target Hospital
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Content -->
+                        <div class="grid grid-cols-[43%_10%_43%] justify-between w-full relative z-10 gap-y-12 sm:gap-y-16">
+                            <!-- ROW 1: Physical -> Arrow -> Transferred Physical -->
+                            <div class="bg-white text-blue-800 p-1.5 sm:p-2 rounded-xl flex items-center gap-2 sm:gap-3 border border-blue-200 w-full shadow-sm">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-lg flex items-center justify-center shadow-inner shrink-0 relative overflow-hidden">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Chest_Xray_PA_3-8-2010.png/250px-Chest_Xray_PA_3-8-2010.png" alt="Chest X-Ray" class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <i class="ph-fill ph-lungs text-blue-300 text-xl sm:text-2xl drop-shadow-[0_0_4px_rgba(147,197,253,0.9)] hidden"></i>
+                                    <div class="absolute inset-0 bg-blue-500/20 mix-blend-overlay pointer-events-none"></div>
+                                </div>
+                                <div class="leading-tight font-bold text-[10px] sm:text-xs">Physical<br><span class="text-[9px] sm:text-[10px] font-medium text-blue-500">Chest X-Ray</span></div>
+                            </div>
+                            
+                            <div class="relative flex items-center justify-center w-full h-full">
+                                <div class="h-0 w-[150%] border-t-2 border-blue-300 absolute -left-[25%] top-1/2 transform -translate-y-1/2"></div>
+                                <i class="ph-fill ph-caret-right text-blue-400 absolute -right-2 top-1/2 transform -translate-y-1/2 text-sm"></i>
+                            </div>
+
+                            <div class="bg-white text-blue-800 p-1.5 sm:p-2 rounded-xl flex items-center gap-2 sm:gap-3 border border-blue-200 w-full shadow-sm">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-lg flex items-center justify-center shadow-inner shrink-0 relative overflow-hidden">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Chest_Xray_PA_3-8-2010.png/250px-Chest_Xray_PA_3-8-2010.png" alt="Chest X-Ray" class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <i class="ph-fill ph-lungs text-blue-300 text-xl sm:text-2xl drop-shadow-[0_0_4px_rgba(147,197,253,0.9)] hidden"></i>
+                                    <div class="absolute inset-0 bg-blue-500/20 mix-blend-overlay pointer-events-none"></div>
+                                </div>
+                                <div class="leading-tight font-bold text-[10px] sm:text-xs">Physical<br><span class="text-[9px] sm:text-[10px] font-medium text-blue-500">Transferred</span></div>
+                            </div>
+
+                            <!-- ROW 2: Mental -> Arrow -> Prohibited -->
+                            <div class="bg-rose-50 text-rose-900 p-1.5 sm:p-2 rounded-xl flex items-center gap-2 sm:gap-3 border-2 border-rose-300 w-full shadow-[0_0_15px_rgba(225,29,72,0.15)] relative">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-lg flex items-center justify-center shadow-inner shrink-0 relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-rose-500/20 mix-blend-overlay"></div>
+                                    <i class="ph-fill ph-brain text-rose-400 text-xl sm:text-2xl drop-shadow-[0_0_4px_rgba(251,113,133,0.9)]"></i>
+                                </div>
+                                <div class="leading-tight font-extrabold text-[10px] sm:text-xs">Mental<br><span class="text-[9px] sm:text-[10px] font-semibold text-rose-600">fMRI Scan</span></div>
+                                <div class="absolute -top-2 -right-2 bg-rose-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow">Sensitive</div>
+                            </div>
+
+                            <div class="relative flex items-center justify-center w-full h-full">
+                                <div class="h-0 w-[150%] border-t-2 border-dashed border-rose-500 absolute -left-[25%] top-1/2 transform -translate-y-1/2"></div>
+                                <i class="ph-fill ph-caret-right text-rose-500 absolute -right-2 top-1/2 transform -translate-y-1/2 text-sm"></i>
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-2 sm:translate-y-[10px] text-[6px] sm:text-[7px] font-bold text-rose-600 bg-rose-50 border border-rose-200 px-1 py-[1px] leading-none rounded-[2px] shadow-sm z-10 whitespace-nowrap uppercase">Transfer</div>
+                            </div>
+
+                            <div class="bg-gray-50 text-gray-400 p-1.5 sm:p-2 rounded-xl flex items-center gap-2 sm:gap-3 border-2 border-dashed border-gray-300 w-full relative overflow-hidden">
+                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 rounded-lg flex items-center justify-center shrink-0">
+                                    <i class="ph-fill ph-brain text-gray-400 text-xl sm:text-2xl"></i>
+                                </div>
+                                <div class="leading-tight font-bold text-[10px] sm:text-xs">Prohibited<br><span class="text-[9px] sm:text-[10px] font-medium">Mental Data</span></div>
+                                <div class="absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-[1px]">
+                                    <i class="ph-bold ph-x text-rose-600 text-4xl opacity-100 drop-shadow-md"></i>
+                                </div>
+                            </div>
+
+                            <!-- Central Adapt Box -->
+                            <div class="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[9px] sm:text-[10px] font-bold text-white bg-brand-600 px-2 py-1.5 rounded-lg shadow-md z-20 flex flex-col items-center gap-0.5 text-center border border-brand-400 min-w-[50px]">
+                                <i class="ph-fill ph-cpu text-sm"></i> Adapt
+                            </div>
+                        </div>
+
+                        <!-- Alert Badge -->
+                        <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-rose-600 border-2 border-white text-white text-[10px] sm:text-xs font-bold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2 whitespace-nowrap z-20 tracking-wide">
+                            <i class="ph-fill ph-warning-octagon text-base"></i> Zero-Shot Leakage
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Abstract -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Abstract</h2>
+            </div>
+            <p class="text-gray-700 leading-relaxed text-justify">
+                The increasing adaptation of vision models across domains, such as satellite imagery and medical scans, has raised an emerging privacy risk: models may inadvertently retain and leak sensitive source-domain specific information in the target domain. This creates a compelling use case for machine unlearning to protect the privacy of sensitive source-domain data. Among adaptation techniques, source-free domain adaptation (SFDA) calls for an urgent need for machine unlearning (MU), where the source data itself is protected, yet the source model exposed during adaptation encodes its influence. 
+                <br><br>
+                Our experiments reveal that existing SFDA methods exhibit strong zero-shot performance on source-exclusive classes in the target domain, indicating they inadvertently leak knowledge of these classes into the target domain, even when they are not represented in the target data. We identify and address this risk by proposing an MU setting called <strong>SCADA-UL: Unlearning Source-exclusive Classes in Domain Adaptation</strong>. Existing MU methods do not address this setting as they are not designed to handle data distribution shifts. We propose a new unlearning method, where an adversarially generated forget class sample is unlearned by the model during the domain adaptation process using a novel rescaled labeling strategy and adversarial optimization. Alongside theoretical interpretations, our comprehensive empirical results show that our method consistently outperforms baselines while achieving retraining-level unlearning performance.
+            </p>
+        </section>
+
+        <!-- Methodology -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Methodology</h2>
+            </div>
+            
+            <div class="mb-8">
+                 <!-- REPLACE THE SRC BELOW WITH YOUR ACTUAL METHOD IMAGE (e.g. Figure 3) -->
+                <div class="w-full rounded-2xl overflow-hidden shadow-md border border-gray-200 bg-white placeholder-img flex items-center justify-center relative aspect-[21/9]">
+                    <img src="./method-diagram-new.pdf" alt="Methodology Diagram" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('method-placeholder').style.display='flex';">
+                    <div id="method-placeholder" class="absolute inset-0 flex-col items-center justify-center text-gray-400 hidden z-0">
+                        <i class="ph ph-image text-4xl mb-2"></i>
+                        <p class="font-medium">Place methodology image here (methodology.png)</p>
+                    </div>
+                </div>
+                <p class="mt-4 text-sm text-gray-600 text-justify">
+                    <strong>Our Overall Method:</strong> We adapt a source trained model to a target domain while forgetting specific classes. We create initial adversarial samples by maximizing their probability of belonging to the forget classes. In subsequent iterations, the model minimizes the MU loss using a novel rescaled labeling strategy alongside the SFDA loss.
+                </p>
+            </div>
+
+            <p class="text-gray-700 leading-relaxed text-justify mb-4">
+                To address SCADA-UL, we propose an approach that performs simultaneous unlearning and domain adaptation. However, these two goals are naturally misaligned: adaptation transfers source domain classes to the target, while unlearning seeks to avoid the transfer of specific source-exclusive classes. 
+            </p>
+            <ul class="list-disc pl-6 text-gray-700 space-y-2 mb-6">
+                <li><strong>Adversarial Forget Samples:</strong> Without access to the source data, we generate representative samples for the "forget" class using adversarial optimization directly in the input space.</li>
+                <li><strong>Novel Rescaled Labeling:</strong> To induce unlearning with minimal conflict during adaptation, we expose the model to false information—redistributing the output probabilities of the forget sample proportionally among the retain classes.</li>
+                <li><strong>Joint Optimization:</strong> An iterative min-max optimization is used, where the adversarial sample generation evolves alongside the adapting model.</li>
+            </ul>
+
+            <!-- Mathematical Formulation -->
+            <div class="mt-10 bg-white border border-brand-100 rounded-2xl shadow-sm overflow-hidden">
+                <div class="bg-brand-50 border-b border-brand-100 px-6 py-4">
+                    <h3 class="text-lg font-bold text-brand-900 flex items-center gap-2">
+                        <i class="ph-fill ph-math-operations text-brand-600"></i>
+                        Mathematical Formulation
+                    </h3>
+                </div>
+                <div class="p-6 space-y-8 text-sm sm:text-base text-gray-700">
+                    
+                    <!-- Eq 1 -->
+                    <div>
+                        <p class="mb-3"><strong>1. Adversarial Forget Sample Generation:</strong> We generate representative samples $\hat{x}$ for the "forget" class $c_{\mathcal{F}}$ by maximizing their cross-entropy loss ($\mathcal{L}_{CE}$) probability:</p>
+                        <div class="bg-gray-50 p-4 rounded-xl overflow-x-auto text-center border border-gray-200 shadow-inner">
+                            $$\mathcal{L}_{ADV}(w^{\mathcal{T}}, \hat{x}) = \mathcal{L}_{CE}(w^{\mathcal{T}}, \hat{x}, c_{\mathcal{F}})$$
+                        </div>
+                    </div>
+
+                    <!-- Eq 2 -->
+                    <div>
+                        <p class="mb-3"><strong>2. Rescaled Labeling Strategy:</strong> To induce unlearning with minimal conflict, we redistribute the original output probabilities $y$ proportionally among the retain classes $\mathcal{C}_{\mathcal{R}}$:</p>
+                        <div class="bg-gray-50 p-4 rounded-xl overflow-x-auto text-center border border-gray-200 shadow-inner">
+                            $$\hat{y}_i = \begin{cases} 0 & \text{if } i = c_{\mathcal{F}} \\ \frac{y_i}{\sum_{j \in \mathcal{C}_{\mathcal{R}}} y_j} & \text{if } i \in \mathcal{C}_{\mathcal{R}} \end{cases}$$
+                        </div>
+                    </div>
+
+                    <!-- Eq 3 -->
+                    <div>
+                        <p class="mb-3 text-justify"><strong>3. Adversarial Optimization:</strong> The optimization is adversarial because the model minimizes the unlearning loss to "forget" the sample, while the sample simultaneously updates its pixels to maximize its resemblance to the forget class. Specifically, the target model ($w^{\mathcal{T}}$) is updated to minimize the domain adaptation loss ($\mathcal{L}_{SFDA}$) and the unlearning loss ($\mathcal{L}_{MU}$), while the adversarial samples ($\hat{x}$) are continuously updated to minimize $\mathcal{L}_{ADV}$. This tug-of-war exposes residual knowledge and forces thorough unlearning:</p>
+                        <div class="bg-gray-50 p-4 sm:p-6 rounded-xl overflow-x-auto text-center border border-gray-200 shadow-inner flex flex-col gap-2">
+                            <div>$$\min_{w^{\mathcal{T}}} \Big[ \mathcal{L}_{SFDA}(w^{\mathcal{T}}, x^{\mathcal{T}}) + \alpha \mathcal{L}_{MU}(w^{\mathcal{T}}, \hat{x}, \hat{y}) \Big]$$</div>
+                            <div class="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-widest my-1">simultaneously with</div>
+                            <div>$$\min_{\hat{x}} \mathcal{L}_{ADV}(w^{\mathcal{T}}, \hat{x})$$</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Results (New Quantitative Section) -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Key Results</h2>
+            </div>
+            <p class="text-gray-700 leading-relaxed text-justify mb-8">
+                We evaluate SCADA-UL across multiple benchmarks including OfficeHome, DomainNet, and real-world medical datasets (CheXpert &rarr; NIH Chest X-ray). We compare our approach against established Source-Free Domain Adaptation, Partial Domain Adaptation (PDA), and Data-Free Machine Unlearning baselines: <strong>$SF(DA)^2$</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2021)</span>, <strong>SHOT</strong> <span class="text-gray-400 text-sm font-medium">(ICML 2020)</span>, <strong>NRC</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2021)</span>, <strong>AaD</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2022)</span>, <strong>BA3US</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, <strong>ZSMU</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, <strong>Boundary Unlearning (BU)</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, and <strong>SSD</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2023)</span>. The results demonstrate that our adversarial optimization framework successfully suppresses zero-shot leakage of sensitive classes to <strong>0.0%</strong>, effectively mirroring a model that was completely retrained without the source-exclusive data.
+            </p>
+
+            <!-- Leaderboard Table -->
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden mb-6">
+                <div class="bg-brand-50 px-6 py-4 border-b border-brand-100 flex items-center gap-2">
+                    <i class="ph-fill ph-table text-brand-600 text-lg"></i>
+                    <h3 class="text-sm font-bold text-brand-900 uppercase tracking-wider">
+                        Performance Comparison on OfficeHome Dataset
+                    </h3>
+                </div>
+            
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-gray-50 text-gray-500 border-b border-gray-200">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold">Method</th>
+                                <th class="px-6 py-4 font-semibold text-center">
+                                    Target Retain Acc.
+                                    <br>
+                                    <span class="text-xs font-normal">($A_{\mathcal{D}_r^{\mathcal{T}}}$) &uarr;</span>
+                                </th>
+                                <th class="px-6 py-4 font-semibold text-center">
+                                    Target Forget Acc.
+                                    <br>
+                                    <span class="text-xs font-normal">($A_{\mathcal{D}_f^{\mathcal{T}}}$) &darr;</span>
+                                </th>
+                                <th class="px-6 py-4 font-semibold text-center">
+                                    Unlearn Score
+                                    <br>
+                                    <span class="text-xs font-normal">&uarr;</span>
+                                </th>
+                            </tr>
+                        </thead>
+            
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    Original: SF(DA)<sup>2</sup>
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">ICLR 2024</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">75.8 &plusmn; 1.0%</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 text-rose-700 bg-rose-50 px-2.5 py-1 rounded-md font-semibold text-xs border border-rose-200 shadow-sm">
+                                        <i class="ph-fill ph-warning-circle text-rose-500 text-sm"></i>
+                                        58.1 &plusmn; 2.2% Leakage
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.48 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="bg-gray-50/80">
+                                <td class="px-6 py-4 font-medium text-gray-500 italic">
+                                    Retrain
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">Gold-standard oracle</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-500 italic">76.3 &plusmn; 1.2%</td>
+                                <td class="px-6 py-4 text-center text-gray-500 italic">0.0 &plusmn; 0.0%</td>
+                                <td class="px-6 py-4 text-center text-gray-500 italic">0.76 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    Finetune
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">Baseline</span>
+                                </td>
+                                <td class="px-6 py-4 text-center font-semibold text-gray-900">76.1 &plusmn; 0.9%</td>
+                                <td class="px-6 py-4 text-center text-rose-500 font-medium">49.2 &plusmn; 2.2%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.51 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    UNSIR
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">IEEE TNNLS 2023</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">35.0 &plusmn; 5.6%</td>
+                                <td class="px-6 py-4 text-center font-semibold text-emerald-700">0.0 &plusmn; 0.0%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.35 &plusmn; 0.1</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    ZSMU
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">IEEE TIFS 2023</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">71.1 &plusmn; 6.1%</td>
+                                <td class="px-6 py-4 text-center text-rose-500 font-medium">39.8 &plusmn; 10.0%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.50 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    Lipschitz
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">arXiv 2024</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">58.6 &plusmn; 11.0%</td>
+                                <td class="px-6 py-4 text-center text-rose-500 font-medium">25.4 &plusmn; 16.0%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.46 &plusmn; 0.1</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    Nabla Tau
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">CoRR 2024</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">63.2 &plusmn; 2.9%</td>
+                                <td class="px-6 py-4 text-center text-emerald-700 font-medium">1.5 &plusmn; 2.0%</td>
+                                <td class="px-6 py-4 text-center font-semibold text-gray-900">0.62 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    Unlearned(+)
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">CVPR 2025</span>
+                                </td>
+                                <td class="px-6 py-4 text-center font-semibold text-gray-900">76.1 &plusmn; 9.4%</td>
+                                <td class="px-6 py-4 text-center text-rose-500 font-medium">38.6 &plusmn; 7.3%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.54 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    PADA
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">ECCV 2018</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">74.0 &plusmn; 1.4%</td>
+                                <td class="px-6 py-4 text-center text-rose-500 font-medium">62.6 &plusmn; 1.3%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.45 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-gray-900">
+                                    SHOT
+                                    <span class="ml-2 text-xs font-semibold text-gray-400">ICML 2020</span>
+                                </td>
+                                <td class="px-6 py-4 text-center text-gray-700">73.7 &plusmn; 1.3%</td>
+                                <td class="px-6 py-4 text-center text-rose-500 font-medium">24.7 &plusmn; 1.2%</td>
+                                <td class="px-6 py-4 text-center text-gray-700">0.59 &plusmn; 0.0</td>
+                            </tr>
+            
+                            <!-- Ours (Highlighted) -->
+                            <tr class="bg-brand-50/60 hover:bg-brand-50 transition-colors relative">
+                                <td class="px-6 py-4 font-extrabold text-brand-900 flex items-center gap-2">
+                                    <i class="ph-fill ph-star text-brand-500 text-lg drop-shadow-sm"></i>
+                                    SCADA-UL
+                                    <span class="text-xs font-semibold text-brand-500">(Ours)</span>
+                                </td>
+                                <td class="px-6 py-4 text-center font-bold text-gray-900">75.1 &plusmn; 1.3%</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-md font-extrabold text-xs border border-emerald-300 shadow-sm">
+                                        <i class="ph-fill ph-check-circle text-emerald-600 text-sm"></i>
+                                        0.0 &plusmn; 0.0% Perfect
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center font-extrabold text-brand-700">0.75 &plusmn; 0.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 text-center italic">
+                * Note: The 'Retrain' model requires full access to the source data and represents the theoretical upper bound (Gold Standard). SCADA-UL achieves nearly identical performance completely Source-Free.
+            </p>
+
+            <!-- Moved Text -->
+            <p class="text-gray-700 leading-relaxed text-justify mt-10 mb-6">
+                We also extended our approach to two highly practical variants: <strong>C-SCADA-UL</strong> (Continual SCADA-UL) for scenarios where classes must be forgotten sequentially across multiple requests, and <strong>UC-SCADA-UL</strong> (Unknown Class) for instances where the specific source-exclusive classes to be forgotten are initially unknown.
+            </p>
+
+        </section>
+
+        <!-- Conclusion (Formerly Key Results) -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Conclusion</h2>
+            </div>
+            <p class="text-gray-700 leading-relaxed text-justify mb-6">
+                Our comprehensive suite of experiments across multiple datasets (OfficeHome, Office31, DomainNet, and real-world medical/satellite datasets) demonstrates the superiority of our adversarial optimization framework over existing Data-Free MU and Partial Domain Adaptation (PDA) baselines.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <i class="ph-duotone ph-chart-line-up text-4xl text-brand-500 mb-3"></i>
+                    <h4 class="font-bold text-gray-900 mb-2">Retraining-Level Unlearning</h4>
+                    <p class="text-sm text-gray-600">Consistently achieves forget accuracies and unlearn scores comparable to a gold-standard model retrained from scratch without the sensitive data.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <i class="ph-duotone ph-shield-check text-4xl text-brand-500 mb-3"></i>
+                    <h4 class="font-bold text-gray-900 mb-2">Eliminates Zero-Shot Leakage</h4>
+                    <p class="text-sm text-gray-600">Successfully prevents the model from retaining zero-shot transfer capabilities for source-exclusive classes in the target domain.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <i class="ph-duotone ph-arrows-merge text-4xl text-brand-500 mb-3"></i>
+                    <h4 class="font-bold text-gray-900 mb-2">Simultaneous Adaptation</h4>
+                    <p class="text-sm text-gray-600">Maintains high performance on "retain" classes while adapting robustly to new target domain distributions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BibTeX -->
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Citation</h2>
+            </div>
+            <div class="relative bg-gray-900 rounded-xl shadow-lg overflow-hidden text-left">
+                <div class="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+                    <span class="text-xs font-mono text-gray-400">BibTeX</span>
+                    <button onclick="copyBibtex()" id="copy-btn" class="flex items-center gap-1 text-xs text-gray-300 hover:text-white transition-colors">
+                        <i class="ph ph-copy"></i>
+                        <span id="copy-text">Copy</span>
+                    </button>
+                </div>
+                <div class="p-4 overflow-x-auto">
+                    <pre class="text-sm font-mono text-gray-300 leading-relaxed"><code id="bibtex-code">@misc{devalapally2026oslashsourcemodelsleak,
+      title={$\oslash$ Source Models Leak What They Shouldn't $\nrightarrow$: Unlearning Zero-Shot Transfer in Domain Adaptation Through Adversarial Optimization}, 
+      author={Arnav Devalapally and Poornima Jain and Kartik Srinivas and Vineeth N. Balasubramanian},
+      year={2026},
+      eprint={2604.08238},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2604.08238}, 
+}</code></pre>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm text-gray-500">
+        <p>Project page template inspired by leading academic research showcases.</p>
+    </footer>
+
+    <!-- Copy BibTeX Script -->
+    <script>
+        function copyBibtex() {
+            const codeText = document.getElementById('bibtex-code').innerText;
+            const copyText = document.getElementById('copy-text');
+            const copyBtn = document.getElementById('copy-btn');
+            
+            // Fallback for older browsers or iframes
+            const textArea = document.createElement("textarea");
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                copyText.innerText = 'Copied!';
+                copyBtn.classList.add('text-green-400');
+                
+                setTimeout(() => {
+                    copyText.innerText = 'Copy';
+                    copyBtn.classList.remove('text-green-400');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
