@@ -152,7 +152,7 @@
                 </div>
             </div>
             <p class="mt-4 text-sm text-gray-600 text-justify">
-                <strong>Figure 1: Comparison of Conventional MU and Proposed SCADA-UL.</strong> Conventional class-wise machine unlearning focuses on forgetting a subset of classes from a trained model. On the other hand, the proposed SCADA-UL aims to remove knowledge of source-exclusive classes (classes absent in target domain) while adapting a model to a new domain. For instance, if a land-use categorization model is adapted to a new geography, sensitive classes such as airports must not be transferred to the target domain.
+                <strong>Comparison of Conventional MU and Our Proposed Method.</strong> Conventional class-wise machine unlearning focuses on forgetting a subset of classes from a trained model. We propose <strong>SCADA-UL: Unlearning Source-exclusive Classes in Domain Adaptation</strong> aims to remove knowledge of source-exclusive classes (classes absent in target domain) while adapting a model to a new domain. For instance, if a land-use categorization model is adapted to a new geography, sensitive classes such as airports must not be transferred to the target domain.
             </p>
         </section>
 
@@ -264,7 +264,7 @@
             </div>
         </section>
 
-        <!-- Abstract -->
+        <!-- <!-- Abstract -->
         <section class="mb-16">
             <div class="text-center mb-8">
                 <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Abstract</h2>
@@ -274,7 +274,7 @@
                 <br><br>
                 Our experiments reveal that existing SFDA methods exhibit strong zero-shot performance on source-exclusive classes in the target domain, indicating they inadvertently leak knowledge of these classes into the target domain, even when they are not represented in the target data. We identify and address this risk by proposing an MU setting called <strong>SCADA-UL: Unlearning Source-exclusive Classes in Domain Adaptation</strong>. Existing MU methods do not address this setting as they are not designed to handle data distribution shifts. We propose a new unlearning method, where an adversarially generated forget class sample is unlearned by the model during the domain adaptation process using a novel rescaled labeling strategy and adversarial optimization. Alongside theoretical interpretations, our comprehensive empirical results show that our method consistently outperforms baselines while achieving retraining-level unlearning performance.
             </p>
-        </section>
+        </section> -->
 
         <!-- Methodology -->
         <section class="mb-16">
@@ -292,7 +292,7 @@
                     </div>
                 </div>
                 <p class="mt-4 text-sm text-gray-600 text-justify">
-                    <strong>Our Overall Method:</strong> We adapt a source trained model to a target domain while forgetting specific classes. We create initial adversarial samples by maximizing their probability of belonging to the forget classes. In subsequent iterations, the model minimizes the MU loss using a novel rescaled labeling strategy alongside the SFDA loss.
+                    We adapt a source trained model to a target domain while forgetting specific classes. We create initial adversarial samples by maximizing their probability of belonging to the forget classes. In subsequent iterations, the model minimizes the MU loss using a novel rescaled labeling strategy alongside the SFDA loss.
                 </p>
             </div>
 
@@ -333,7 +333,7 @@
 
                     <!-- Eq 3 -->
                     <div>
-                        <p class="mb-3 text-justify"><strong>3. Adversarial Optimization:</strong> The optimization is adversarial because the model minimizes the unlearning loss to "forget" the sample, while the sample simultaneously updates its pixels to maximize its resemblance to the forget class. Specifically, the target model ($w^{\mathcal{T}}$) is updated to minimize the domain adaptation loss ($\mathcal{L}_{SFDA}$) and the unlearning loss ($\mathcal{L}_{MU}$), while the adversarial samples ($\hat{x}$) are continuously updated to minimize $\mathcal{L}_{ADV}$. This tug-of-war exposes residual knowledge and forces thorough unlearning:</p>
+                        <p class="mb-3 text-justify"><strong>3. Adversarial Optimization:</strong> The optimization is adversarial because the model minimizes the unlearning loss to "forget" the sample, while the sample simultaneously updates its pixels to maximize its resemblance to the forget class. Specifically, the target model ($w^{\mathcal{T}}$) is updated to minimize the domain adaptation loss ($\mathcal{L}_{SFDA}$) and the unlearning loss ($\mathcal{L}_{MU}$), while the adversarial samples ($\hat{x}$) are continuously updated to minimize $\mathcal{L}_{ADV}$.</p>
                         <div class="bg-gray-50 p-4 sm:p-6 rounded-xl overflow-x-auto text-center border border-gray-200 shadow-inner flex flex-col gap-2">
                             <div>$$\min_{w^{\mathcal{T}}} \Big[ \mathcal{L}_{SFDA}(w^{\mathcal{T}}, x^{\mathcal{T}}) + \alpha \mathcal{L}_{MU}(w^{\mathcal{T}}, \hat{x}, \hat{y}) \Big]$$</div>
                             <div class="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-widest my-1">simultaneously with</div>
@@ -350,9 +350,9 @@
             <div class="text-center mb-8">
                 <h2 class="inline-block text-2xl font-bold text-gray-900 pb-2 border-b-2 border-brand-500">Key Results</h2>
             </div>
-            <p class="text-gray-700 leading-relaxed text-justify mb-8">
+            <!-- <p class="text-gray-700 leading-relaxed text-justify mb-8">
                 We evaluate SCADA-UL across multiple benchmarks including OfficeHome, DomainNet, and real-world medical datasets (CheXpert &rarr; NIH Chest X-ray). We compare our approach against established Source-Free Domain Adaptation, Partial Domain Adaptation (PDA), and Data-Free Machine Unlearning baselines: <strong>$SF(DA)^2$</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2021)</span>, <strong>SHOT</strong> <span class="text-gray-400 text-sm font-medium">(ICML 2020)</span>, <strong>NRC</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2021)</span>, <strong>AaD</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2022)</span>, <strong>BA3US</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, <strong>ZSMU</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, <strong>Boundary Unlearning (BU)</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, and <strong>SSD</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2023)</span>. The results demonstrate that our adversarial optimization framework successfully suppresses zero-shot leakage of sensitive classes to <strong>0.0%</strong>, effectively mirroring a model that was completely retrained without the source-exclusive data.
-            </p>
+            </p> -->
 
             <!-- Leaderboard Table -->
             <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden mb-6">
