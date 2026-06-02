@@ -127,7 +127,7 @@
                 <i class="ph ph-file-text text-xl"></i>
                 ArXiv
             </a>
-            <a href="./cvpr_2026_paper_scada_ul.pdf" target="_blank" class="btn-link flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800">
+            <a href="./cvpr_2026_paper_poornima_arxiv.pdf" target="_blank" class="btn-link flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800">
                 <i class="ph ph-file-pdf text-xl"></i>
                 Paper PDF
             </a>
@@ -284,13 +284,21 @@
                 </p>
             </div>
 
+            <p class="text-gray-700 leading-relaxed text-justify mb-4">
+                To address SCADA-UL, we propose an approach that performs simultaneous unlearning and domain adaptation. However, these two goals are naturally misaligned: adaptation transfers source domain classes to the target, while unlearning seeks to avoid the transfer of specific source-exclusive classes. 
+            </p>
+            <ul class="list-disc pl-6 text-gray-700 space-y-2 mb-6">
+                <li><strong>Adversarial Forget Samples:</strong> Without access to the source data, we generate representative samples for the "forget" class using adversarial optimization directly in the input space.</li>
+                <li><strong>Novel Rescaled Labeling:</strong> To induce unlearning with minimal conflict during adaptation, we expose the model to false information—redistributing the output probabilities of the forget sample proportionally among the retain classes.</li>
+                <li><strong>Joint Optimization:</strong> An iterative min-max optimization is used, where the adversarial sample generation evolves alongside the adapting model.</li>
+            </ul>
 
             <!-- Mathematical Formulation -->
             <div class="mt-10 bg-white border border-brand-100 rounded-2xl shadow-sm overflow-hidden">
                 <div class="bg-brand-50 border-b border-brand-100 px-6 py-4">
                     <h3 class="text-lg font-bold text-brand-900 flex items-center gap-2">
                         <i class="ph-fill ph-math-operations text-brand-600"></i>
-                        Optimization Framework
+                        Mathematical Formulation
                     </h3>
                 </div>
                 <div class="p-6 space-y-8 text-sm sm:text-base text-gray-700">
@@ -334,167 +342,12 @@
                 We evaluate SCADA-UL across multiple benchmarks including OfficeHome, DomainNet, and real-world medical datasets (CheXpert &rarr; NIH Chest X-ray). We compare our approach against established Source-Free Domain Adaptation, Partial Domain Adaptation (PDA), and Data-Free Machine Unlearning baselines: <strong>$SF(DA)^2$</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2021)</span>, <strong>SHOT</strong> <span class="text-gray-400 text-sm font-medium">(ICML 2020)</span>, <strong>NRC</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2021)</span>, <strong>AaD</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2022)</span>, <strong>BA3US</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, <strong>ZSMU</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, <strong>Boundary Unlearning (BU)</strong> <span class="text-gray-400 text-sm font-medium">(CVPR 2023)</span>, and <strong>SSD</strong> <span class="text-gray-400 text-sm font-medium">(NeurIPS 2023)</span>. The results demonstrate that our adversarial optimization framework successfully suppresses zero-shot leakage of sensitive classes to <strong>0.0%</strong>, effectively mirroring a model that was completely retrained without the source-exclusive data.
             </p> -->
 
-            <!-- Leaderboard Table -->
-            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden mb-6">
-                <div class="bg-brand-50 px-6 py-4 border-b border-brand-100 flex items-center gap-2">
-                    <i class="ph-fill ph-table text-brand-600 text-lg"></i>
-                    <h3 class="text-sm font-bold text-brand-900 uppercase tracking-wider">
-                        Performance Comparison on OfficeHome Dataset
-                    </h3>
-                </div>
-            
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm whitespace-nowrap">
-                        <thead class="bg-gray-50 text-gray-500 border-b border-gray-200">
-                            <tr>
-                                <th class="px-6 py-4 font-semibold">Method</th>
-                                <th class="px-6 py-4 font-semibold text-center">
-                                    Target Retain Acc.
-                                    <br>
-                                    <span class="text-xs font-normal">($A_{\mathcal{D}_r^{\mathcal{T}}}$) &uarr;</span>
-                                </th>
-                                <th class="px-6 py-4 font-semibold text-center">
-                                    Target Forget Acc.
-                                    <br>
-                                    <span class="text-xs font-normal">($A_{\mathcal{D}_f^{\mathcal{T}}}$) &darr;</span>
-                                </th>
-                                <th class="px-6 py-4 font-semibold text-center">
-                                    Unlearn Score
-                                    <br>
-                                    <span class="text-xs font-normal">&uarr;</span>
-                                </th>
-                            </tr>
-                        </thead>
-            
-                        <tbody class="divide-y divide-gray-100">
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    Original: SF(DA)<sup>2</sup>
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">ICLR 2024</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">75.8 &plusmn; 1.0%</td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center gap-1.5 text-rose-700 bg-rose-50 px-2.5 py-1 rounded-md font-semibold text-xs border border-rose-200 shadow-sm">
-                                        <i class="ph-fill ph-warning-circle text-rose-500 text-sm"></i>
-                                        58.1 &plusmn; 2.2% Leakage
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.48 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="bg-gray-50/80">
-                                <td class="px-6 py-4 font-medium text-gray-500 italic">
-                                    Retrain
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">Gold-standard oracle</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-500 italic">76.3 &plusmn; 1.2%</td>
-                                <td class="px-6 py-4 text-center text-gray-500 italic">0.0 &plusmn; 0.0%</td>
-                                <td class="px-6 py-4 text-center text-gray-500 italic">0.76 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    Finetune
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">Baseline</span>
-                                </td>
-                                <td class="px-6 py-4 text-center font-semibold text-gray-900">76.1 &plusmn; 0.9%</td>
-                                <td class="px-6 py-4 text-center text-rose-500 font-medium">49.2 &plusmn; 2.2%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.51 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    UNSIR
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">IEEE TNNLS 2023</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">35.0 &plusmn; 5.6%</td>
-                                <td class="px-6 py-4 text-center font-semibold text-emerald-700">0.0 &plusmn; 0.0%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.35 &plusmn; 0.1</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    ZSMU
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">IEEE TIFS 2023</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">71.1 &plusmn; 6.1%</td>
-                                <td class="px-6 py-4 text-center text-rose-500 font-medium">39.8 &plusmn; 10.0%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.50 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    Lipschitz
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">arXiv 2024</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">58.6 &plusmn; 11.0%</td>
-                                <td class="px-6 py-4 text-center text-rose-500 font-medium">25.4 &plusmn; 16.0%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.46 &plusmn; 0.1</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    Nabla Tau
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">CoRR 2024</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">63.2 &plusmn; 2.9%</td>
-                                <td class="px-6 py-4 text-center text-emerald-700 font-medium">1.5 &plusmn; 2.0%</td>
-                                <td class="px-6 py-4 text-center font-semibold text-gray-900">0.62 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    Unlearned(+)
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">CVPR 2025</span>
-                                </td>
-                                <td class="px-6 py-4 text-center font-semibold text-gray-900">76.1 &plusmn; 9.4%</td>
-                                <td class="px-6 py-4 text-center text-rose-500 font-medium">38.6 &plusmn; 7.3%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.54 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    PADA
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">ECCV 2018</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">74.0 &plusmn; 1.4%</td>
-                                <td class="px-6 py-4 text-center text-rose-500 font-medium">62.6 &plusmn; 1.3%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.45 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-gray-900">
-                                    SHOT
-                                    <span class="ml-2 text-xs font-semibold text-gray-400">ICML 2020</span>
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-700">73.7 &plusmn; 1.3%</td>
-                                <td class="px-6 py-4 text-center text-rose-500 font-medium">24.7 &plusmn; 1.2%</td>
-                                <td class="px-6 py-4 text-center text-gray-700">0.59 &plusmn; 0.0</td>
-                            </tr>
-            
-                            <!-- Ours (Highlighted) -->
-                            <tr class="bg-brand-50/60 hover:bg-brand-50 transition-colors relative">
-                                <td class="px-6 py-4 font-extrabold text-brand-900 flex items-center gap-2">
-                                    <i class="ph-fill ph-star text-brand-500 text-lg drop-shadow-sm"></i>
-                                    SCADA-UL
-                                    <span class="text-xs font-semibold text-brand-500">(Ours)</span>
-                                </td>
-                                <td class="px-6 py-4 text-center font-bold text-gray-900">75.1 &plusmn; 1.3%</td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center gap-1.5 text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-md font-extrabold text-xs border border-emerald-300 shadow-sm">
-                                        <i class="ph-fill ph-check-circle text-emerald-600 text-sm"></i>
-                                        0.0 &plusmn; 0.0% Perfect
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-center font-extrabold text-brand-700">0.75 &plusmn; 0.0</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Results Figure -->
+            <div class="relative left-1/2 w-screen max-w-7xl -translate-x-1/2 px-4 sm:px-6 lg:px-8 mb-6">
+                <div class="w-full rounded-2xl overflow-hidden shadow-md border border-gray-200 bg-white">
+                    <img src="./key-results.png" alt="Key results comparing SCADA-UL with retrain oracle, prior methods, original model, and other baselines across OfficeHome, Office31, and DomainNet-126." class="w-full h-auto object-contain">
                 </div>
             </div>
-            <p class="text-xs text-gray-500 text-center italic">
-                * Note: The 'Retrain' model requires full access to the source data and represents the theoretical upper bound (Gold Standard). SCADA-UL achieves nearly identical performance completely Source-Free.
-            </p>
 
             <!-- Moved Text -->
             <p class="text-gray-700 leading-relaxed text-justify mt-10 mb-6">
