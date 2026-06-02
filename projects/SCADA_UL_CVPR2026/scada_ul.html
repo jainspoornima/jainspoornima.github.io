@@ -284,21 +284,13 @@
                 </p>
             </div>
 
-            <p class="text-gray-700 leading-relaxed text-justify mb-4">
-                To address SCADA-UL, we propose an approach that performs simultaneous unlearning and domain adaptation. However, these two goals are naturally misaligned: adaptation transfers source domain classes to the target, while unlearning seeks to avoid the transfer of specific source-exclusive classes. 
-            </p>
-            <ul class="list-disc pl-6 text-gray-700 space-y-2 mb-6">
-                <li><strong>Adversarial Forget Samples:</strong> Without access to the source data, we generate representative samples for the "forget" class using adversarial optimization directly in the input space.</li>
-                <li><strong>Novel Rescaled Labeling:</strong> To induce unlearning with minimal conflict during adaptation, we expose the model to false information—redistributing the output probabilities of the forget sample proportionally among the retain classes.</li>
-                <li><strong>Joint Optimization:</strong> An iterative min-max optimization is used, where the adversarial sample generation evolves alongside the adapting model.</li>
-            </ul>
 
             <!-- Mathematical Formulation -->
             <div class="mt-10 bg-white border border-brand-100 rounded-2xl shadow-sm overflow-hidden">
                 <div class="bg-brand-50 border-b border-brand-100 px-6 py-4">
                     <h3 class="text-lg font-bold text-brand-900 flex items-center gap-2">
                         <i class="ph-fill ph-math-operations text-brand-600"></i>
-                        Mathematical Formulation
+                        Optimization Framework
                     </h3>
                 </div>
                 <div class="p-6 space-y-8 text-sm sm:text-base text-gray-700">
